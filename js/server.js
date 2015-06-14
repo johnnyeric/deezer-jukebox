@@ -80,6 +80,24 @@ function updatePlayQueues() {
     socket.emit('new tracklist', newTrackList);
 }
 
+//Admin player controls
+socket.on("controls-play", function() {
+    DZ.player.play();
+});
+socket.on("controls-pause", function() {
+    DZ.player.pause();
+});
+socket.on("controls-next", function() {
+    DZ.player.next();
+});
+socket.on("controls-prev", function() {
+    DZ.player.prev();
+});
+socket.on("controls-volume", function(volume) {
+    console.log("Setting volume to " + volume);
+    DZ.player.setVolume(volume);
+});
+
 //Listen for tracklist change and play the player if so
 //Cant seem to get this to work, never called
 DZ.Event.subscribe('tracklist_changed', function() {

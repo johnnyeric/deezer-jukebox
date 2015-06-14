@@ -139,7 +139,7 @@ html, body {
     background: #4b4d4e;
 }
 
-/* Player */
+/* Player & Admin Controls */
 
 #player {
     width: 100%;
@@ -147,8 +147,18 @@ html, body {
     position: absolute;
     bottom: 0;
     left: 0;
+    text-align: center;
 }
 
 #player iframe {
     margin: 0px auto;   
+}
+
+#admin-controls {
+    margin: 0 auto;
+    display: inline-block;
+}
+
+#controls-volume {
+    margin-top: 10px;   
 }

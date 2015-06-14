@@ -1,12 +1,11 @@
 var path = require('path');
-
 var express = require('express');
-var app = express();
 
+var app = express();
 app.use(express.static(__dirname)); //Don't think this is required, only if we decide to move server.js into a new folder
 
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var http = require('http').createServer(app);
+var io = require('socket.io').listen(http);
 
 var trackList = null;
 
@@ -46,6 +45,27 @@ io.on('connection', function(socket) {
     socket.on('request tracklist', function() {
         console.log("Track list requested.");
         io.emit("client tracklist", trackList);
+    });
+    
+    socket.on("controls-play", function() {
+       console.log("Play command received");
+        io.emit("controls-play", null);
+    });
+    socket.on("controls-pause", function() {
+       console.log("Pause command received");
+        io.emit("controls-pause", null);
+    });
+    socket.on("controls-next", function() {
+       console.log("Next command received");
+        io.emit("controls-next", null);
+    });
+    socket.on("controls-prev", function() {
+       console.log("Prev command received");
+        io.emit("controls-prev", null);
+    });
+    socket.on("controls-volume", function(volume) {
+       console.log("Volume change command received");
+        io.emit("controls-volume", volume);
     });
 });
 

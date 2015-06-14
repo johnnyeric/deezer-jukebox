@@ -23,5 +23,5 @@
 * Open port 3000 on the server machine (the one with speakers)
 * Make sure you have a web server running on server machine
 * Add all files to a directory on web server
-* Run node app.js on the server machine & open server.htm.
-* Open client.htm on a client machine
+* Run node app.js on the server machine & open http://localhost:3000/server.
+* Open http://ip_address:3000/client on a client machine
