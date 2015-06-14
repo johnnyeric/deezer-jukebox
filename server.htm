@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>DEEmocracy Server</title>
+        <link rel="stylesheet" type="text/css" href="css/topcoat-desktop-dark.css">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+    </head>
+    <body>
+        
+        <div id="wrapper">
+            <div id="top-bar">
+                <header>
+                    <h1 id="logo">DEEmocracy Server</h1>
+                    <h2 id="slogan">The social Deezer Jukebox.</h2>
+                    <img src="img/Deezer_Logo.png" alt="Deezer Logo">
+                </header>
+            </div>
+            
+            <div id="content">
+                
+                <div id="play-queue-wrapper">
+                    <h3>Play Queue</h3>
+                    <ul id="play-queue">
+                    
+                    </ul>
+                </div>
+                
+            </div>
+            
+        </div>
+        
+        <div id="dz-root"></div>
+        <div id="player"></div>
+        <script src="http://cdn-files.deezer.com/js/min/dz.js"></script>
+        
+        <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script src="js/server.js"></script>
+    </body>
+</html>
