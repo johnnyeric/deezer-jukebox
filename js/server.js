@@ -103,11 +103,12 @@ DZ.Event.subscribe('tracklist_changed', function() {
 //And send updated play queue to clients
 DZ.Event.subscribe('current_track', function(evt_name) {
     console.log("Beginning new track.");
+    socket.emit("changing track", null);
     //Update the play queue
     setTimeout(updatePlayQueues, 1000);
     
 });
 
 $(document).ready(function() {
-    
+    socket.emit("server loaded", null);
 });

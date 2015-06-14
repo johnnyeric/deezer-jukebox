@@ -1,3 +1,5 @@
+var config = require('./config');
+
 var path = require('path');
 var express = require('express');
 
@@ -8,6 +10,7 @@ var http = require('http').createServer(app);
 var io = require('socket.io').listen(http);
 
 var trackList = null;
+var UUIDList = [];
 
 //Serve client.htm on /
 app.get('/', function(req, res) { 
@@ -27,8 +30,27 @@ app.get('/server', function(req, res) {
 io.on('connection', function(socket) {
     console.log('a user connected');
     
+    socket.on("server loaded", function() {
+        trackList = null; 
+        UUIDList = [];
+    });
+    
     socket.on('new song', function(track) {
-        io.emit('new song', track); //Broadcast new song to all connected clients
+        //Count number of tracks by the same UUID
+        //If it's less than config.max_queueable_tracks then push track to server
+        var count = 0;
+        for(var i=0; i<UUIDList.length; i++) {
+            if(UUIDList[i] == track.uuid) count++;
+        }
+        if(count < 4) {
+            UUIDList.push(track.uuid); //Add the track owners UUID to list
+            io.emit('new song', track); //Broadcast new song to all connected clients (Are we still using this?)
+        }
+    });
+    
+    socket.on("changing track", function() {
+        console.log(UUIDList.length + "tracks in queue");
+        UUIDList.shift(); //Remove top track from UUID list
     });
     
     socket.on('disconnect', function(){
