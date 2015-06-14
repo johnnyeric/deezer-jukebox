@@ -14,41 +14,22 @@ DZ.init({
     }
 });
 
-//TODO: - use track object instead of ID
-//
-//
-socket.on("new song", function(trackid) {
-    var title, artist, album;
-    //Get the track information for incoming song
-    $.ajax({
-        method: "GET",
-        jsonp: "callback",
+//Add a new song to the playlist
+//If first track, play it
+//Else append to playlist
+socket.on("new song", function(track) {
+    console.log("New track received: " + track.title );
+    //If we're not already playing, play the track
+    if(!DZ.player.isPlaying()) { 
+        DZ.player.playTracks([track.id]);
+    }
+    else {
+        //Else add the incoming song to Deezer queue
+        DZ.player.addToQueue([track.id]);
+        DZ.player.play();
+    }
 
-        //expecting JSONP (cross-domain)
-        dataType: "jsonp",
-        data: {
-            format: "json"
-        },
-        crossDomain: true,
-        url: 'http://api.deezer.com/track/' + trackid + '&output=jsonp',
-        success: function (response) {
-            if (response) {
-                var track = response;   //Current track from results
-                
-                //If we're not already playing, play the track
-                if(!DZ.player.isPlaying()) { 
-                    DZ.player.playTracks([trackid]);
-                }
-                else {
-                    //ELse add the incoming song to Deezer queue
-                    DZ.player.addToQueue([trackid]);
-                    DZ.player.play();
-                }
-                
-                setTimeout(updatePlayQueues, 1000);
-            }
-        }
-    });
+    setTimeout(updatePlayQueues, 1000);
 });
 
 function updatePlayQueues() {

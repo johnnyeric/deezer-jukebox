@@ -27,9 +27,8 @@ app.get('/server', function(req, res) {
 io.on('connection', function(socket) {
     console.log('a user connected');
     
-    socket.on('new song', function(msg) {
-        console.log('message: ' + msg);
-        io.emit('new song', msg); //Broadcast new song to all connected clients
+    socket.on('new song', function(track) {
+        io.emit('new song', track); //Broadcast new song to all connected clients
     });
     
     socket.on('disconnect', function(){

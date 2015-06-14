@@ -23,15 +23,17 @@ function searchTracks(query) {
                     var source = track.id;        //Track url
 
                     //Add a new <li> element to results
-                    $("#results-list").append("<li><button class='topcoat-icon-button' data-url='" + source + 
-                                              "'><span class='fa fa-plus'></span></button><span class='title'>" + track.title + 
+                    $("#results-list").append("<li><button class='topcoat-icon-button'>" +
+                                              "<span class='fa fa-plus'></span></button><span class='title'>" + track.title + 
                                               "</span><span class='artist'>" + track.artist.name + 
                                               "</span><span class='album'>" + track.album.title + "</span></li>");
+                    //Save track object to data
+                    $("#results-list li:last-child button").data("track", track);
 
                 }
                 //Now make the play <button>s clickable
                 $("#results-list li button").click(function() {
-                    socket.emit('new song', $(this).data("url"));
+                    socket.emit('new song', $(this).data("track") );
                 });
             }
         }
