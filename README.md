@@ -17,3 +17,11 @@
 * No player controls for admins
 * No max queued tracks yet.
 * Front end needs tidying up.
+
+##How to use
+* Install NodeJS from https://nodejs.org/
+* Open port 3000 on the server machine (the one with speakers)
+* Make sure you have a web server running on server machine
+* Add all files to a directory on web server
+* Run node app.js on the server machine & open server.htm.
+* Open client.htm on a client machine
