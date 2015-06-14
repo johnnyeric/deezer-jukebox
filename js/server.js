@@ -79,8 +79,22 @@ socket.on("controls-volume", function(volume) {
     DZ.player.setVolume(volume);
 });
 
+//Listen for position in track
+//If this is the last song in the queue
+//Stop when we're < 2 secs away from the end
+//Unable to use DZ.player.play() otherwise
+DZ.Event.subscribe('player_position', function(arg) {
+    console.log(arg[1] - arg[0] + " seconds remaining");
+    if(arg[1] - arg[0] < 2.5) {
+        if(DZ.player.getCurrentIndex() == DZ.player.getTrackList().length - 1) {
+            console.log("End of last track in playlist - pausing");
+            DZ.player.pause();
+        }
+    }
+});
+
 //Listen for tracklist change and play the player if so
-//Cant seem to get this to work, never called
+//This doesn't seem to get fired - no idea why, it's in the SDK docs
 DZ.Event.subscribe('tracklist_changed', function() {
     console.log("Tracklist changed.");
 });
@@ -89,7 +103,6 @@ DZ.Event.subscribe('tracklist_changed', function() {
 //And send updated play queue to clients
 DZ.Event.subscribe('current_track', function(evt_name) {
     console.log("Beginning new track.");
-    
     //Update the play queue
     setTimeout(updatePlayQueues, 1000);
     
